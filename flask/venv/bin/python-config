@@ -1,4 +1,4 @@
-#!/home/rajat/Desktop/dbms/project/DBMS-LAB/flask/venv/bin/python
+#!/home/rattandeep/Desktop/RATTANDEEPSINGH/DBMS-LAB/flask/venv/bin/python
 
 import sys
 import getopt
