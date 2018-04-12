@@ -28,3 +28,13 @@ CREATE TABLE student ( sid integer NOT NULL, name varchar(20) NOT NULL, dob date
 CREATE TABLE takes ( iid INTEGER NOT NULL, vid INTEGER NOT NULL,PRIMARY KEY(iid,vid));
 
 
+
+DELIMITER $$
+CREATE TRIGGER checkrating BEFORE INSERT ON feedback
+for each row
+begin
+if new.rating<0 OR new.rating>5 then
+signal sqlstate '45000' set message_text = 'invalid rating';
+end if;
+end; $$
+
