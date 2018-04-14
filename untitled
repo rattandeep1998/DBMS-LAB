@@ -5,3 +5,12 @@
 An online course system will be created, which will facilitate the e-learning process. There will be a number of courses which will be categorised on their name, ratings, duration, fees and start date. The courses will be taught via videos which will have a specific description and duration. 
 
 Majorly, the course will be run and used by 2 persons, the Student and the Instructor. For every instructor, the expertise will be stored and the courses he is taking will also be stored. Students apart from viewing the videos of the course will also have the feature of attempting problems to reinforce learning. The problem attempted, its answer chosen by the student will be stored so that they can eventually be matched to get the correct answer and the score. 
+
+
+
+student ki enroll date (enroll) me....course ki start date se zayda honi chahiye...
+
+attempted me student wahi problem kar sakta hai jiss course me woh enroll hoga pehle se...
+
+student ussi course ka feedback de sakta hai jisme woh enroll hai...
+
