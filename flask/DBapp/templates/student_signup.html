@@ -20,12 +20,19 @@
  
      <div class="container">
  
-         <form class="form-signin" action="/instructor_login_auth" method="post" role="form">
-             <h2 class="form-signin-heading">Please Sign In </h2>
+         <form class="form-signin" action="/student_register" method="post" role="form">
+             <h2 class="form-signin-heading">Please Sign Up </h2>
+
+             <input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
+             <input type="text" name="address" class="form-control" placeholder="Address" required>
+              <input type="text" name="dob" class="form-control" placeholder="Date of birth" required autofocus>
+             <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" required autofocus>
+             <input type="text" name="highest_degree" class="form-control" placeholder="Highest Degree" required>
+
              <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
              <input type="password" name="password" class="form-control" placeholder="Password" required>
  
-             <button class="btn btn-lg btn-primary btn-block" type="submit">Login </button>
+             <button class="btn btn-lg btn-primary btn-block" type="submit">Register </button>
          </form>
 
          {% if message %}
