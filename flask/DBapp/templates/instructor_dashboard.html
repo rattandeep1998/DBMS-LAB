@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+ 
+     <title>Signin Template for Bootstrap </title>
+ 
+     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+ 
+     <script src="static/js/jquery.js"></script>
+ 
+ </head>
+ 
+ <body>
+ 
+    <div class="container">
+ 
+    <h2>WELCOME {{data['name']}}</h2>
+    {% for i in range(data['cid']|length) %}
+        <li>
+            <a href="/instructor/{{data['iid']}}/courses/{{data['cid'][i]}}">
+                {{data['cid'][i]}}
+            </a>
+            <br>
+            {{data['cname'][i]}}
+            <br><br>
+        </li>
+    {% endfor %}  
+     </div>
+
+ </body>
+ 
+ </html>
