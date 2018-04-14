@@ -60,28 +60,53 @@ def instructor_courses(iid, cid):
 	d={
 		'students':[],
 		'feedbacks':[],
-		'videos':[],
-		'problems':[]
+		'videos_problems':[],
 	}
-	cursor.execute("SELECT SID, RATING, DESCRIPTION, DATE FROM FEEDBACK WHERE CID = " + cid)
-	feedbacks = cursor.fetchall()
-	for f in feedbacks:
-		cursor.execute("SELECT NAME, DOB, PHONE_NUMBER FROM STUDENT WHERE SID = " + str(f[0]))
-		s = cursor.fetchone()
-		d['students'].append({'sid':f[0],'name':s[0],'dob':s[1],'phone_number':s[2]})
-		d['feedbacks'].append({'sname':s[0],'rating':f[1],'description':f[2],'date':f[3]})
 
-	cursor.execute("SELECT VID, TOPIC FROM COURSE_VIDEO WHERE CID = " + cid)
-	videos = cursor.fetchall()
-	for v in videos:
-		d['videos'].append({'vid':v[0],'topic':v[1]})
+	cursor.execute("SELECT SID, DATE FROM ENROLLS WHERE CID = " + cid)
+	students = cursor.fetchall()
+
+	for s in students:
+		d['students'].append({'sid':s[0],'date':s[1]})
+
+	cursor.execute("SELECT SNAME, RATING, DESCRIPTION, DATE FROM FEEDBACK, STUDENT WHERE CID = " + cid + "AND FEEDBACK.SID = STUDENT.SID")
+	feedbacks = cursor.fetchall()
+
+	for f in feedbacks:
+		d['feedbacks'].append({'sname':f[0],'rating':f[1],'description':f[2],'date':f[3]})
+
+	cursor.execute("SELECT VID, TOPIC FROM TAKES NATURAL JOIN COURSE_VIDEO WHERE IID = " + iid + "AND CID = " + cid)
+	videos_problems = cursor.fetchall()
+
+	for v in videos_problems:
+		d['videos_problems'].append({'vid':v[0],'topic':v[1],'problems':[]})
+		l = len(d['videos_problems'])
 		cursor.execute("SELECT PID,QUESTION,OPT1,OPT2,OPT3,OPT4,CORRECT FROM PROBLEM WHERE VID = " + str(v[0]))
 		problems = cursor.fetchall()
 		for p in problems:
-			d['problems'].append({'pid':p[0],'question':p[1],'opt1':p[2],'opt2':p[3],'opt3':p[4],'opt4':p[5],'correct':p[6]})
+			d['videos_problems'][l-1]['problems'].append({'pid':p[0],'question':p[1],'opt1':p[2],'opt2':p[3],'opt3':p[4],'opt4':p[5],'correct':p[6]})
 
 	return jsonify(d)
 	# return render_template('instructor_courses.html', data=d)
+
+@app.route('/instructor/<iid>/courses/<cid>/add_video', methods=['GET', 'POST'])
+def add_video(iid,cid):
+	pass
+
+@app.route('/instructor/<iid>/courses/<cid>/edit_video/<vid>', methods=['GET', 'POST'])
+def edit_video(iid,cid,vid):
+	pass
+
+@app.route('/instructor/<iid>/courses/<cid>/add_problem', methods=['GET', 'POST'])
+def add_problem(iid,cid):
+	pass
+
+@app.route('/instructor/<iid>/courses/<cid>/edit_problem/<pid>', methods=['GET', 'POST'])
+def edit_problem(iid,cid,pid):
+	pass
+
+
+
 
 # @app.route("/Authenticate")
 # def Authenticate():
