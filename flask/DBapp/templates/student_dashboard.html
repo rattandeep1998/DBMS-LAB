@@ -41,7 +41,7 @@
     {% if data['other_courses']|length > 0 %}
         <h4>OTHER COURSES</h4>
         {% for i in range(data['other_courses']|length) %}
-            <a href="">
+            <a href="/student/{{data['sid']}}/courses/{{data['other_courses'][i].cid}}/join">
                 <li>
                     {{data['other_courses'][i].cname}} <br>
                     {{data['other_courses'][i].rating}} <br>

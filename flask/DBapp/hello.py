@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 from flaskext.mysql import MySQL
-import json
+import json, datetime
 
 mysql = MySQL()
 app = Flask(__name__)
@@ -258,8 +258,15 @@ def student_courses(sid,cid):
 
 	cursor.execute("SELECT rating, description, date from feedback where sid="+str(sid)+" and cid="+str(cid))
 	feedback = cursor.fetchone()
-	d['feedback']['rating']=feedback[0]
-	d['feedback']['description']=feedback[1]
+	print('feedback ----- ',  feedback)
+	if feedback is None:
+		d['feedback']['rating']='-1'
+		d['feedback']['description']=''
+		d['feedback']['date']=''
+	else:
+		d['feedback']['rating']=feedback[0]
+		d['feedback']['description']=feedback[1]
+		d['feedback']['date']=feedback[2]
 
 	cursor.execute("SELECT pid, question, correct, chosenOption from problem natural join attempted where cid = " + str(cid) + " and sid = " + str(sid))
 	attempted = cursor.fetchall()
@@ -281,6 +288,7 @@ def student_courses(sid,cid):
 			'iid':instructor[0],
 			'instructor':instructor[1],
 			'duration':v_info[0],
+			'topic':v[1],
 			'description':v_info[1],
 			'problems':[]
 		}
@@ -290,11 +298,31 @@ def student_courses(sid,cid):
 
 		d['videos'].append(data)
 
-	return jsonify(d)
-	# return render_template('student_courses.html', data=d)
+	# return jsonify(d)
+	return render_template('student_courses.html', data=d)
 
-def join_course():
+@app.route('/student/<sid>/courses/<cid>/join', methods=['GET', 'POST'])
+def join_course(sid, cid):
+	if request.method=='GET':
+		return render_template('join_course.html')
+	else:
+		pass
+
 	pass
+
+@app.route('/student/<sid>/courses/<cid>/feedback', methods=['POST'])
+def submit_feedback(sid, cid):
+	rating = request.form['rating']
+	description = request.form['description']
+	date=datetime.datetime.now()
+	date = str(date).split(' ')[0]
+	print(date)
+	query="INSERT INTO feedback VALUES ("+str(sid)+","+str(cid)+","+rating+",'"+str(description)+"','"+date+"')"
+	print(query)
+
+	cursor.execute(query)
+	cursor.connection.commit()
+	return redirect(url_for('student_courses', sid=sid, cid=cid))
 
 if __name__ == "__main__":
 	app.run(port=8000, debug=True)
