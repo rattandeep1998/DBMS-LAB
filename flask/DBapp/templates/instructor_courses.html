@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+ 
+     <title>Signin Template for Bootstrap </title>
+ 
+     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+ 
+     <script src="static/js/jquery.js"></script>
+ 
+ </head>
+ 
+ <body>
+ 
+    <div class="container">
+ 
+    <h3>STUDENTS ENROLLED</h2>
+    <ul>
+    {% for i in range(data['students']|length) %}
+        <li>
+            Name : {{data['students'][i].sname}}
+            Date Joined : {{data['students'][i].date}}
+        </li>
+    {% endfor %}  
+    </ul>
+
+    <h3>FEEDBACKS</h2>
+    <ul>
+    {% for i in range(data['feedbacks']|length) %}
+        <li>
+            Name : {{data['feedbacks'][i].sname}}
+            Rating : {{data['feedbacks'][i].rating}}
+            Description : {{data['feedbacks'][i].description}}
+            Date : {{data['feedbacks'][i].date}}
+        </li>
+    {% endfor %}  
+    </ul>
+
+    <h3>VIDEOS</h2>
+    <ul>
+    {% for i in range(data['videos_problems']|length) %}
+        <li>
+            Topic : {{data['videos_problems'][i].topic}}
+            Duration : {{data['videos_problems'][i].duration}}
+            <h5>PROBLEMS</h5>
+            <ul>
+                {% for j in range(data['videos_problems'][i].problems|length) %}
+                <li>
+                    QUESTION : {{data['videos_problems'][i].problems[j].question}} <br>
+                    <ol>
+                        <li>{{data['videos_problems'][i].problems[j].opt1}}</li>
+                        <li>{{data['videos_problems'][i].problems[j].opt2}}</li>
+                        <li>{{data['videos_problems'][i].problems[j].opt3}}</li>
+                        <li>{{data['videos_problems'][i].problems[j].opt4}}</li>
+                    </ol>
+                    <br>
+                    CORRECT ANSWER : {{data['videos_problems'][i].problems[j].correct}}
+                </li>
+                {% endfor %}  
+            </ul>
+            <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/{{data['videos_problems'][i].vid}}/add_problem">ADD PROBLEM</a>
+        </li>
+    {% endfor %}  
+    </ul>
+    <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/add_video">ADD VIDEO</a>
+     </div>
+
+ </body>
+ 
+ </html>

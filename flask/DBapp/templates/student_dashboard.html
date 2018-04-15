@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+ 
+     <title>Signin Template for Bootstrap </title>
+ 
+     <link rel="stylesheet" href="static/css/bootstrap.min.css">
+ 
+     <script src="static/js/jquery.js"></script>
+ 
+ </head>
+ 
+ <body>
+ 
+    <div class="container">
+ 
+    <h2>WELCOME {{data['name']}}</h2>
+    <ul>
+    {% if data['enrolled_courses']|length > 0 %}
+        <h4>ENROLLED COURSES</h4>
+        {% for i in range(data['enrolled_courses']|length) %}
+            <a href="/student/{{data['sid']}}/courses/{{data['enrolled_courses'][i].cid}}">
+                <li>
+                    {{data['enrolled_courses'][i].cname}} <br>
+                    {{data['enrolled_courses'][i].rating}} <br>
+                    {{data['enrolled_courses'][i].description}} <br>
+                </li>
+                <br>
+            </a>
+        {% endfor %} 
+    {% endif %}
+    </ul>
+
+    <ul>
+    {% if data['other_courses']|length > 0 %}
+        <h4>OTHER COURSES</h4>
+        {% for i in range(data['other_courses']|length) %}
+            <a href="">
+                <li>
+                    {{data['other_courses'][i].cname}} <br>
+                    {{data['other_courses'][i].rating}} <br>
+                    {{data['other_courses'][i].description}} <br>
+                    {{data['other_courses'][i].start_date}} <br>
+                    {{data['other_courses'][i].fees}} <br>
+                </li>
+                <br>
+            </a>
+        {% endfor %} 
+    {% endif %}
+    </ul>
+
+     </div>
+
+ </body>
+ 
+ </html>
