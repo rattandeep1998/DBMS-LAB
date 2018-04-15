@@ -69,13 +69,13 @@ def instructor_courses(iid, cid):
 	for s in students:
 		d['students'].append({'sid':s[0],'date':s[1]})
 
-	cursor.execute("SELECT SNAME, RATING, DESCRIPTION, DATE FROM feedback, student WHERE CID = " + cid + "AND feedback.SID = student.SID")
+	cursor.execute("SELECT NAME, RATING, DESCRIPTION, DATE FROM feedback, student WHERE CID = " + str(cid) + " AND feedback.sid=student.sid")
 	feedbacks = cursor.fetchall()
 
 	for f in feedbacks:
 		d['feedbacks'].append({'sname':f[0],'rating':f[1],'description':f[2],'date':f[3]})
 
-	cursor.execute("SELECT VID, TOPIC FROM TAKES NATURAL JOIN course_video WHERE IID = " + iid + "AND CID = " + cid)
+	cursor.execute("SELECT VID, TOPIC FROM takes NATURAL JOIN course_video WHERE IID = " + str(iid) + " AND CID = " + str(cid))
 	videos_problems = cursor.fetchall()
 
 	for v in videos_problems:
