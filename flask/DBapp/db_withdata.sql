@@ -115,14 +115,23 @@ CREATE TABLE instructor_courses (
 
 
 
-
+DELIMITER $$
 CREATE TRIGGER checkrating BEFORE INSERT ON feedback
 for each row
 begin
 if new.rating<0 OR new.rating>5 then
 signal sqlstate '45000' set message_text = 'invalid rating';
 end if;
-end; 
+end; $$
+
+DELIMITER $$
+CREATE TRIGGER checkproblemoption BEFORE INSERT ON problem
+for each row
+begin
+if new.correct<0 OR new.correct>4 then
+signal sqlstate '45000' set message_text = 'Choose option between 1 and 4';
+end if;
+end; $$
 
 
 INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','merattandeep@gmail.com','pass123');

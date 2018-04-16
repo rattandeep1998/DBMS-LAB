@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -151,12 +151,14 @@ def add_problem(iid,cid,vid):
 		cursor.execute("SELECT max(pid) from problem")
 		count = cursor.fetchone()[0]
 
-		query="INSERT into problem values ("+str(count+1)+",'"+str(question)+"','"+str(opt1)+"','"+str(opt2)+"','"+str(opt3)+"','"+str(opt4)+"','"+str(correct)+"',"+str(vid)+")"
-		print(query)
-		cursor.execute(query)
-		cursor.connection.commit()
-
-		return redirect(url_for('instructor_courses', iid=iid, cid=cid))
+		try:
+			query="INSERT into problem values ("+str(count+1)+",'"+str(question)+"','"+str(opt1)+"','"+str(opt2)+"','"+str(opt3)+"','"+str(opt4)+"','"+str(correct)+"',"+str(vid)+")"
+			print(query)
+			cursor.execute(query)
+			cursor.connection.commit()
+			return redirect(url_for('instructor_courses', iid=iid, cid=cid))
+		except:
+			return redirect(url_for('add_problem', iid=iid, cid=cid, vid=vid, message="Choose Correct option between 1 and 4"))
 
 @app.route('/instructor/<iid>/courses/<cid>/edit_problem/<pid>', methods=['GET', 'POST'])
 def edit_problem(iid,cid,pid):
@@ -299,16 +301,25 @@ def student_courses(sid,cid):
 		d['videos'].append(data)
 
 	# return jsonify(d)
-	return render_template('student_courses.html', data=d)
+	return render_template('student_courses.html', data=d, message=request.args.get('message'))
 
 @app.route('/student/<sid>/courses/<cid>/join', methods=['GET', 'POST'])
 def join_course(sid, cid):
 	if request.method=='GET':
-		return render_template('join_course.html')
-	else:
-		pass
+		cursor.execute("SELECT * FROM course where cid="+str(cid))
+		c = cursor.fetchone()
 
-	pass
+		d = {
+			'cid':c[0],
+			'name':c[1],
+			'rating':c[2],
+			'start_date':c[3],
+			'description':c[4],
+			'fees':c[5],
+		}
+
+		return render_template('join_course.html', data=d)
+
 
 @app.route('/student/<sid>/courses/<cid>/feedback', methods=['POST'])
 def submit_feedback(sid, cid):
@@ -320,9 +331,12 @@ def submit_feedback(sid, cid):
 	query="INSERT INTO feedback VALUES ("+str(sid)+","+str(cid)+","+rating+",'"+str(description)+"','"+date+"')"
 	print(query)
 
-	cursor.execute(query)
-	cursor.connection.commit()
-	return redirect(url_for('student_courses', sid=sid, cid=cid))
+	try:
+		cursor.execute(query)
+		cursor.connection.commit()
+		return redirect(url_for('student_courses', sid=sid, cid=cid))
+	except:
+		return redirect(url_for('student_courses', sid=sid, cid=cid, message="Invalid Rating"))
 
 if __name__ == "__main__":
 	app.run(port=8000, debug=True)

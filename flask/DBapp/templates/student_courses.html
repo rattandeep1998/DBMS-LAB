@@ -35,6 +35,10 @@
             Date : {{data['feedback'].date}}
             <br>
     {% endif %}
+
+    {% if message %}
+        <h5 class="alert alert-warning">{{message}}</h5>
+    {% endif %}
     <br>
     <h4>Attempted</h4>
     {% for i in range(data['attempted']|length) %}
