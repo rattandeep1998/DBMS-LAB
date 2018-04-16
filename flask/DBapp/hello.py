@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -13,7 +13,7 @@ cursor = mysql.connect().cursor()
  
 @app.route("/")
 def hello():
-	return "Welcome to Python Flask App!"
+	return render_template('index.html')
 
 @app.route('/instructor_login', methods=['GET', 'POST'])
 def instructor_login():
@@ -209,7 +209,7 @@ def student_login():
 		else:
 			return redirect('/student/'+str(data[0]), code=307)
 
-@app.route('/student/<sid>', methods=['POST'])
+@app.route('/student/<sid>', methods=['GET', 'POST'])
 def student_dashboard(sid):
 	print('sid = ', sid)
 	cursor.execute("SELECT name from student where sid="+str(sid))
@@ -258,6 +258,9 @@ def student_courses(sid,cid):
 	cursor.execute("SELECT vid, topic from course_video where cid = " + str(cid))
 	videos = cursor.fetchall()
 
+	for v in videos:
+		d['videos'].append({'vid':v[0],'topic':v[1]})
+
 	cursor.execute("SELECT rating, description, date from feedback where sid="+str(sid)+" and cid="+str(cid))
 	feedback = cursor.fetchone()
 	print('feedback ----- ',  feedback)
@@ -270,56 +273,73 @@ def student_courses(sid,cid):
 		d['feedback']['description']=feedback[1]
 		d['feedback']['date']=feedback[2]
 
+	return render_template('student_courses.html', data=d, message=request.args.get('message'))
+
+@app.route('/student/<sid>/courses/<cid>/<vid>', methods=['GET', 'POST'])
+def courses_video(sid,cid,vid):
+
+	cursor.execute("SELECT duration, description from video where vid="+str(vid))
+	v_info = cursor.fetchone()
+
+	cursor.execute("SELECT iid, name from takes natural join instructor where vid="+str(vid))
+	instructor = cursor.fetchone()
+
+	cursor.execute("SELECT * from problem where vid="+str(vid)+" AND pid NOT IN (SELECT pid from attempted where cid = " + str(cid) + " and sid = " + str(sid) + ")")
+	problems = cursor.fetchall()
+
+	d = {
+		'sid':sid,
+		'cid':cid,
+		'attempted':[],
+		'video':{
+			'vid':vid,
+			'iid':instructor[0],
+			'instructor':instructor[1],
+			'duration':v_info[0],
+			'description':v_info[1],
+			'problems':[]
+		}
+	}
+
+	for p in problems:
+		d['video']['problems'].append({'pid':p[0],'question':p[1],'opt1':p[2],'opt2':p[3],'opt3':p[4],'opt4':p[5],'correct':p[6]})	
+
 	cursor.execute("SELECT pid, question, correct, chosenOption from problem natural join attempted where cid = " + str(cid) + " and sid = " + str(sid))
 	attempted = cursor.fetchall()
 
 	for a in attempted:
-		d['attempted'].append({'pid':a[0], 'question':a[1], 'correct':a[2], 'chosenOption':a[3]})
+		result = a[2]==a[3]
+		d['attempted'].append({'pid':a[0], 'question':a[1], 'correct':a[2], 'chosenOption':a[3], 'result':result})
 
-	for v in videos:
-		cursor.execute("SELECT duration, description from video where vid="+str(v[0]))
-		v_info = cursor.fetchone()
+	print(d)
 
-		cursor.execute("SELECT iid, name from takes natural join instructor where vid="+str(v[0]))
-		instructor = cursor.fetchone()
+	return render_template('course_video.html', data=d)
 
-		cursor.execute("SELECT * from problem where vid="+str(v[0])+" AND pid NOT IN (SELECT pid from attempted where cid = " + str(cid) + " and sid = " + str(sid) + ")")
-		problems = cursor.fetchall()
+@app.route('/student/<sid>/courses/<cid>/<vid>/submit/<pid>', methods=['GET', 'POST'])
+def submit_problem(sid,cid,vid,pid):
+	option = request.form['option']
+	print(option)
 
-		data = {
-			'iid':instructor[0],
-			'instructor':instructor[1],
-			'duration':v_info[0],
-			'topic':v[1],
-			'description':v_info[1],
-			'problems':[]
-		}
+	cursor.execute("SELECT * from problem where pid="+str(pid))
+	p = cursor.fetchone()
 
-		for p in problems:
-			data['problems'].append({'pid':p[0],'question':p[1],'opt1':p[2],'opt2':p[3],'opt3':p[4],'opt4':p[5],'correct':p[6]})
+	d={'correct':p[6], 'option':option}
 
-		d['videos'].append(data)
+	cursor.execute("INSERT INTO attempted VALUES (%s,%s,%s,%s)"%(str(sid),str(cid),str(pid),str(option)))
+	cursor.connection.commit()
 
-	# return jsonify(d)
-	return render_template('student_courses.html', data=d, message=request.args.get('message'))
+	return redirect(url_for('courses_video', sid=sid, cid=cid, vid=vid))
 
 @app.route('/student/<sid>/courses/<cid>/join', methods=['GET', 'POST'])
 def join_course(sid, cid):
 	if request.method=='GET':
-		cursor.execute("SELECT * FROM course where cid="+str(cid))
-		c = cursor.fetchone()
+		date=datetime.datetime.now()
+		date = str(date).split(' ')[0]
+		print(date)
+		cursor.execute("INSERT INTO enrolls VALUES (%s,%s,'%s')"%(str(sid),str(cid),date))
+		c = cursor.connection.commit()
 
-		d = {
-			'cid':c[0],
-			'name':c[1],
-			'rating':c[2],
-			'start_date':c[3],
-			'description':c[4],
-			'fees':c[5],
-		}
-
-		return render_template('join_course.html', data=d)
-
+		return redirect('/student/'+str(sid), code=307)
 
 @app.route('/student/<sid>/courses/<cid>/feedback', methods=['POST'])
 def submit_feedback(sid, cid):

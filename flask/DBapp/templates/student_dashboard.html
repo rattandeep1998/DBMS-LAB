@@ -41,16 +41,19 @@
     {% if data['other_courses']|length > 0 %}
         <h4>OTHER COURSES</h4>
         {% for i in range(data['other_courses']|length) %}
-            <a href="/student/{{data['sid']}}/courses/{{data['other_courses'][i].cid}}/join">
-                <li>
+             <li>
                     {{data['other_courses'][i].cname}} <br>
                     {{data['other_courses'][i].rating}} <br>
                     {{data['other_courses'][i].description}} <br>
                     {{data['other_courses'][i].start_date}} <br>
                     {{data['other_courses'][i].fees}} <br>
+                    <a href="/student/{{data['sid']}}/courses/{{data['other_courses'][i].cid}}/join">
+                        <button class="btn btn-primary">
+                            Enroll in this Course
+                        </button>
+                    </a>
                 </li>
                 <br>
-            </a>
         {% endfor %} 
     {% endif %}
     </ul>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+ 
+     <title>Signin Template for Bootstrap </title>
+ 
+     <link rel="stylesheet" href="../../../../../static/css/bootstrap.min.css">
+ 
+     <script src="../../../../../static/js/jquery.js"></script>
+
+ </head>
+ 
+ <body>
+ 
+    <div class="container">
+
+    <br>
+    Duration : {{data['video'].duration}} <br>
+    Description : {{data['video'].description}} <br>
+    Instructor : {{data['video'].instructor}} <br><br><br>
+
+
+    <br>
+    <ul>
+    {% for i in range(data['attempted']|length) %}
+        <li>
+            Question : {{data['attempted'][i].question}}
+            Result : {{data['attempted'][i].result}}
+        </li>
+        <br>
+    {% endfor %}  
+    </ul>
+
+    <p>
+    {% if data['video'].problems|length %}
+    <h4>PROBLEMS</h4>
+        <ul>
+            {% for j in range(data['video'].problems|length) %}
+            <li>
+                QUESTION : {{data['video'].problems[j].question}} <br>
+                <ol>
+                    <li>{{data['video'].problems[j].opt1}}</li>
+                    <li>{{data['video'].problems[j].opt2}}</li>
+                    <li>{{data['video'].problems[j].opt3}}</li>
+                    <li>{{data['video'].problems[j].opt4}}</li>
+                    <form method="post" action="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['video'].vid}}/submit/{{data['video'].problems[j].pid}}">
+                        <input type="text" name="option" placeholder="Answer">
+                        <button class="btn" type="Submit">Submit</button>
+                    </form>
+                </ol>
+                <br>
+            </li>
+            {% endfor %}  
+        </ul>
+    {% endif %}
+    </div>
+
+ </body>
+ 
+ </html>

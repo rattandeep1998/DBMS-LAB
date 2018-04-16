@@ -29,10 +29,10 @@
             <button class="btn btn-lg btn-primary btn-block" type="Submit">Submit Feedback</button>
         </form>
     {% else %}
-        <h3>YOUR FEEDBACK</h2>
-            Rating : {{data['feedback'].rating}}
-            Description : {{data['feedback'].description}}
-            Date : {{data['feedback'].date}}
+        <h3>YOUR FEEDBACK</h3>
+            Rating : {{data['feedback'].rating}} <br>
+            Description : {{data['feedback'].description}}<br>
+            Date : {{data['feedback'].date}}<br>
             <br>
     {% endif %}
 
@@ -40,40 +40,12 @@
         <h5 class="alert alert-warning">{{message}}</h5>
     {% endif %}
     <br>
-    <h4>Attempted</h4>
-    {% for i in range(data['attempted']|length) %}
-        <li>
-            Question : {{data['attempted'][i].question}}
-            Correct Answer : {{data['attempted'][i].correct}}
-            chosenOption : {{data['attempted'][i].chosenOption}}
-        </li>
-    {% endfor %}  
-    </ul>
-
+    
     <h3>VIDEOS</h2>
     <ul>
     {% for i in range(data['videos']|length) %}
         <li>
-            Topic : {{data['videos'][i].topic}}
-            Duration : {{data['videos'][i].duration}}
-            Description : {{data['videos'][i].description}}
-            Instructor : {{data['videos'][i].instructor}}
-
-            <h5>PROBLEMS</h5>
-            <ul>
-                {% for j in range(data['videos'][i].problems|length) %}
-                <li>
-                    QUESTION : {{data['videos'][i].problems[j].question}} <br>
-                    <ol>
-                        <li>{{data['videos'][i].problems[j].opt1}}</li>
-                        <li>{{data['videos'][i].problems[j].opt2}}</li>
-                        <li>{{data['videos'][i].problems[j].opt3}}</li>
-                        <li>{{data['videos'][i].problems[j].opt4}}</li>
-                    </ol>
-                    <br>
-                </li>
-                {% endfor %}  
-            </ul>
+            <a href="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['videos'][i].vid}}">Topic : {{data['videos'][i].topic}}</a>
         </li>
     {% endfor %}  
     </ul>
