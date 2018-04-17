@@ -304,7 +304,7 @@ def courses_video(sid,cid,vid):
 	for p in problems:
 		d['video']['problems'].append({'pid':p[0],'question':p[1],'opt1':p[2],'opt2':p[3],'opt3':p[4],'opt4':p[5],'correct':p[6]})	
 
-	cursor.execute("SELECT pid, question, correct, chosenOption from problem natural join attempted where cid = " + str(cid) + " and sid = " + str(sid))
+	cursor.execute("SELECT pid, question, correct, chosenOption from problem natural join attempted where cid = '%s' and sid = '%s' and vid = '%s'"%(str(cid),str(sid),str(vid)))
 	attempted = cursor.fetchall()
 
 	for a in attempted:

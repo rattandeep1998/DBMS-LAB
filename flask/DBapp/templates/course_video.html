@@ -27,11 +27,14 @@
 
 
     <br>
+    <h4>PROBLEMS</h4>
     <ul>
     {% for i in range(data['attempted']|length) %}
         <li>
             Question : {{data['attempted'][i].question}}
             Result : {{data['attempted'][i].result}}
+            correct : {{data['attempted'][i].correct}}
+            chosenOption : {{data['attempted'][i].chosenOption}}
         </li>
         <br>
     {% endfor %}  
@@ -39,7 +42,6 @@
 
     <p>
     {% if data['video'].problems|length %}
-    <h4>PROBLEMS</h4>
         <ul>
             {% for j in range(data['video'].problems|length) %}
             <li>
