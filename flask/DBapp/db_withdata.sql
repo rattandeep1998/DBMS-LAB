@@ -71,6 +71,7 @@ CREATE TABLE instructor_expertise (
 
 CREATE TABLE video (
 	vid integer not null,
+	content text not null,
 	duration integer,
 	description text NOT NULL,
 	PRIMARY key(vid)
@@ -154,12 +155,12 @@ INSERT into course_tag values(3,'ML');
 INSERT into course_tag values(3,'Data Science');
 INSERT into course_tag values(3,'Advanced');
 
-INSERT into video values(301,5,'Video on Arrays');
-INSERT into video values(302,35,'Video on Linked Lists');
-INSERT into video values(303,24,'Video on HTML');
-INSERT into video values(304,17,'Video on Javascript');
-INSERT into video values(305,9,'Video on Linear Regression');
-INSERT into video values(306,2,'Video on Gradient Descent');
+INSERT into video values(301,"https://www.youtube.com/embed/bjtvf_BFMgs",5,'Video on Arrays');
+INSERT into video values(302,"https://www.youtube.com/embed/eGnlKPCkAFY",35,'Video on Linked Lists');
+INSERT into video values(303,"https://www.youtube.com/embed/y3UH2gAhwPI",24,'Video on HTML');
+INSERT into video values(304,"https://www.youtube.com/embed/Ukg_U3CnJWI",17,'Video on Javascript');
+INSERT into video values(305,"https://www.youtube.com/embed/zPG4NjIkCjc",9,'Video on Linear Regression');
+INSERT into video values(306,"https://www.youtube.com/embed/IHZwWFHWa-w",2,'Video on Gradient Descent');
 
 INSERT into course_video values(1,301,'arrays');
 INSERT into course_video values(1,302,'lists');

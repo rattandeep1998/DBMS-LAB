@@ -278,7 +278,7 @@ def student_courses(sid,cid):
 @app.route('/student/<sid>/courses/<cid>/<vid>', methods=['GET', 'POST'])
 def courses_video(sid,cid,vid):
 
-	cursor.execute("SELECT duration, description from video where vid="+str(vid))
+	cursor.execute("SELECT content, duration, description from video where vid="+str(vid))
 	v_info = cursor.fetchone()
 
 	cursor.execute("SELECT iid, name from takes natural join instructor where vid="+str(vid))
@@ -295,8 +295,9 @@ def courses_video(sid,cid,vid):
 			'vid':vid,
 			'iid':instructor[0],
 			'instructor':instructor[1],
-			'duration':v_info[0],
-			'description':v_info[1],
+			'content':v_info[0],
+			'duration':v_info[1],
+			'description':v_info[2],
 			'problems':[]
 		}
 	}
