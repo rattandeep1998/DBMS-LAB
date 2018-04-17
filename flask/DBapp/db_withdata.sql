@@ -134,6 +134,16 @@ signal sqlstate '45000' set message_text = 'Choose option between 1 and 4';
 end if;
 end; $$
 
+DELIMITER $$
+CREATE TRIGGER checkstudentdateofbirth BEFORE INSERT ON student
+for each row
+begin
+if new.dob > Date(SYSDATE()) then
+signal sqlstate '45000' set message_text = 'DOB should be less than current date';
+end if;
+end; $$
+
+
 
 INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','merattandeep@gmail.com','pass123');
 INSERT into student values(102,'RAJAT SINGHAL','1997-02-01','Dwarka, New Delhi',8447151548,'BE','rs@gmail.com','rrrr');
