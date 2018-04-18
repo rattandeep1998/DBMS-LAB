@@ -23,6 +23,7 @@
  
          <form class="form-signin" action="/instructor/{{data['iid']}}/courses/{{data['cid']}}/add_video" method="post" role="form">
              <h2 class="form-signin-heading">Add Video</h2>
+             <input type="text" name="content" class="form-control" placeholder="Link" required autofocus>
              <input type="text" name="topic" class="form-control" placeholder="Topic" required autofocus>
              <input type="text" name="duration" class="form-control" placeholder="Duration" required autofocus>
              <input type="text" name="description" class="form-control" placeholder="Description" required>

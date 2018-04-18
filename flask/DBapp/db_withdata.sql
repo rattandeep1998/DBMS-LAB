@@ -135,6 +135,15 @@ end if;
 end; $$
 
 DELIMITER $$
+CREATE TRIGGER checkattemptedoption BEFORE INSERT ON attempted
+for each row
+begin
+if new.chosenOption<0 OR new.chosenOption>4 then
+signal sqlstate '45000' set message_text = 'Choose option between 1 and 4';
+end if;
+end; $$
+
+DELIMITER $$
 CREATE TRIGGER checkstudentdateofbirth BEFORE INSERT ON student
 for each row
 begin

@@ -20,27 +20,40 @@
  
     <div class="container">
  
-    <h3>STUDENTS ENROLLED</h2>
+    <h3>STUDENTS ENROLLED</h2><br>
     <ul>
     {% for i in range(data['students']|length) %}
         <li>
-            Name : {{data['students'][i].sname}}
-            Date Joined : {{data['students'][i].date}}
+            Name : {{data['students'][i].sname}} <br>
+            Enrolled Date : {{data['students'][i].date}}
         </li>
+        <br>
     {% endfor %}  
     </ul>
 
     <h3>FEEDBACKS</h2>
-    <ul>
-    {% for i in range(data['feedbacks']|length) %}
-        <li>
-            Name : {{data['feedbacks'][i].sname}}
-            Rating : {{data['feedbacks'][i].rating}}
-            Description : {{data['feedbacks'][i].description}}
-            Date : {{data['feedbacks'][i].date}}
-        </li>
-    {% endfor %}  
-    </ul>
+    <br>
+
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Description</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in range(data['feedbacks']|length) %}
+                <tr>
+                    <td>{{data['feedbacks'][i].sname}}</td>
+                    <td>{{data['feedbacks'][i].rating}}</td>
+                    <td>{{data['feedbacks'][i].description}}</td>
+                    <td>{{data['feedbacks'][i].date}}</td>
+                </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
 
     <h3>VIDEOS</h2>
     <ul>

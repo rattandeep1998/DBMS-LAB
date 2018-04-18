@@ -23,37 +23,56 @@
     <br>
     <!-- Duration : {{data['video'].duration}} <br> -->
     <iframe width="560" height="315" src= {{data['video'].content}} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><br>
-    Description : {{data['video'].description}} <br>
-    Instructor : {{data['video'].instructor}} <br><br><br>
+    <b> Description : </b> {{data['video'].description}} <br>
+    <b> Instructor : </b> {{data['video'].instructor}} <br><br><br>
 
 
     <br>
     <h4>PROBLEMS</h4>
-    <ul>
-    {% for i in range(data['attempted']|length) %}
-        <li>
-            Question : {{data['attempted'][i].question}}
-            Result : {{data['attempted'][i].result}}
-            correct : {{data['attempted'][i].correct}}
-            chosenOption : {{data['attempted'][i].chosenOption}}
-        </li>
-        <br>
-    {% endfor %}  
+
+    <br>
+    <h5>Attempted Problems</h5>
+
+    <table class="table table-hover">
+            <thead>
+              <tr>
+                <th style="width: 50%">Question</th>
+                <th>Result</th>
+                <th>Correct Option</th>
+                <th>Choosen Option</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in range(data['attempted']|length) %}
+                    <tr>
+                    
+                        <td>{{data['attempted'][i].question}}</td>
+                        <td>{{data['attempted'][i].result}}</td>
+                        <td>{{data['attempted'][i].correct}}</td>
+                        <td>{{data['attempted'][i].chosenOption}}</td>
+                    
+                    </tr>
+                    
+                    
+                {% endfor %}
+            </tbody>
+        </table>  
     </ul>
 
+    <br><br>
     <p>
     {% if data['video'].problems|length %}
         <ul>
             {% for j in range(data['video'].problems|length) %}
             <li>
-                QUESTION : {{data['video'].problems[j].question}} <br>
+                QUESTION : <br> {{data['video'].problems[j].question}} <br>
                 <ol>
                     <li>{{data['video'].problems[j].opt1}}</li>
                     <li>{{data['video'].problems[j].opt2}}</li>
                     <li>{{data['video'].problems[j].opt3}}</li>
                     <li>{{data['video'].problems[j].opt4}}</li>
                     <form method="post" action="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['video'].vid}}/submit/{{data['video'].problems[j].pid}}">
-                        <input type="text" name="option" placeholder="Answer">
+                        <input type="text" name="option" placeholder="Choose Option">
                         <button class="btn" type="Submit">Submit</button>
                     </form>
                 </ol>
@@ -62,6 +81,11 @@
             {% endfor %}  
         </ul>
     {% endif %}
+
+    {% if message %}
+        <h5 class="alert alert-warning">{{message}}</h5>
+    {% endif %}
+    
     </div>
 
  </body>

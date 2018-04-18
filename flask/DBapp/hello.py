@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -102,6 +102,7 @@ def add_video(iid,cid):
 		return render_template('add_video.html', data=d, message=request.args.get('message'))
 
 	else:
+		content = request.form['content']
 		topic = request.form['topic']
 		duration = request.form['duration']
 		description = request.form['description']
@@ -109,7 +110,7 @@ def add_video(iid,cid):
 		cursor.execute("SELECT max(vid) from video")
 		count = cursor.fetchone()[0]
 
-		query="INSERT into video values ("+str(count+1)+","+str(duration)+",'"+str(description)+"')"
+		query="INSERT into video values ("+str(count+1)+",'"+ str(content) +"',"+str(duration)+",'"+str(description)+"')"
 		print(query)
 		cursor.execute(query)
 		cursor.connection.commit()
@@ -320,22 +321,27 @@ def courses_video(sid,cid,vid):
 
 	print(d)
 
-	return render_template('course_video.html', data=d)
+	return render_template('course_video.html', data=d, message=request.args.get('message'))
 
 @app.route('/student/<sid>/courses/<cid>/<vid>/submit/<pid>', methods=['GET', 'POST'])
 def submit_problem(sid,cid,vid,pid):
 	option = request.form['option']
 	print(option)
 
-	cursor.execute("SELECT * from problem where pid="+str(pid))
-	p = cursor.fetchone()
+	try:
+		cursor.execute("SELECT * from problem where pid="+str(pid))
+		p = cursor.fetchone()
 
-	d={'correct':p[6], 'option':option}
+		d={'correct':p[6], 'option':option}
 
-	cursor.execute("INSERT INTO attempted VALUES (%s,%s,%s,%s)"%(str(sid),str(cid),str(pid),str(option)))
-	cursor.connection.commit()
+		cursor.execute("INSERT INTO attempted VALUES (%s,%s,%s,%s)"%(str(sid),str(cid),str(pid),str(option)))
+		cursor.connection.commit()
 
-	return redirect(url_for('courses_video', sid=sid, cid=cid, vid=vid))
+		return redirect(url_for('courses_video', sid=sid, cid=cid, vid=vid))
+
+	except Exception as e:
+		return redirect(url_for('courses_video', sid=sid, cid=cid, vid=vid, message='Chose option between 1 and 4'))
+	
 
 @app.route('/student/<sid>/courses/<cid>/join', methods=['GET', 'POST'])
 def join_course(sid, cid):

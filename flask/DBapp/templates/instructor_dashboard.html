@@ -21,17 +21,22 @@
     <div class="container">
  
     <h2>WELCOME {{data['name']}}</h2>
+    <br>
+
+    <h5>List of Courses :</h5>
+    <br>
+    
     {% for i in range(data['cid']|length) %}
         <li>
             <a href="/instructor/{{data['iid']}}/courses/{{data['cid'][i]}}">
-                {{data['cid'][i]}}
+                {{data['cname'][i]}}
             </a>
-            <br>
-            {{data['cname'][i]}}
             <br><br>
         </li>
     {% endfor %}  
-     </div>
+    
+
+    </div>
 
  </body>
  
