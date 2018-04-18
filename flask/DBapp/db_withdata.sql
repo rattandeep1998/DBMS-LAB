@@ -219,8 +219,8 @@ INSERT into attempted values(102,2,506,3);
 INSERT into attempted values(103,2,507,3);
 
 INSERT into feedback values(101,1,5,'awesome course','2018-05-30');
+INSERT into feedback values(101,3,4,'mindblowing','2018-04-15');
 INSERT into feedback values(102,2,2,'good','2018-06-30');
-INSERT into feedback values(103,3,4,'mindblowing','2018-04-15');
 
 INSERT into instructor_courses values(201,1);
 INSERT into instructor_courses values(201,3);
