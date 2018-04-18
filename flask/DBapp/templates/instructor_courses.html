@@ -59,8 +59,7 @@
     <ul>
     {% for i in range(data['videos_problems']|length) %}
         <li>
-            Topic : {{data['videos_problems'][i].topic}}
-            Duration : {{data['videos_problems'][i].duration}}
+            <b> Topic : </b>{{data['videos_problems'][i].topic}} <br><br>
             <h5>PROBLEMS</h5>
             <ul>
                 {% for j in range(data['videos_problems'][i].problems|length) %}
@@ -74,6 +73,12 @@
                     </ol>
                     <br>
                     CORRECT ANSWER : {{data['videos_problems'][i].problems[j].correct}}
+                    <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/delete_problem/{{data['videos_problems'][i].problems[j].pid}}">
+                        <button type="button">
+                            Delete Problem
+                        </button>
+                    </a>
+                    <br>
                 </li>
                 {% endfor %}  
             </ul>

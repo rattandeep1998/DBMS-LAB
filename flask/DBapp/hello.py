@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -161,9 +161,16 @@ def add_problem(iid,cid,vid):
 		except:
 			return redirect(url_for('add_problem', iid=iid, cid=cid, vid=vid, message="Choose Correct option between 1 and 4"))
 
-@app.route('/instructor/<iid>/courses/<cid>/edit_problem/<pid>', methods=['GET', 'POST'])
-def edit_problem(iid,cid,pid):
-	pass
+@app.route('/instructor/<iid>/courses/<cid>/delete_problem/<pid>', methods=['GET', 'POST'])
+def delete_problem(iid,cid,pid):
+
+	cursor.execute("DELETE FROM problem where pid = " + str(pid))
+	cursor.connection.commit()
+
+	cursor.execute("DELETE FROM attempted where pid = " + str(pid))
+	cursor.connection.commit()
+	
+	return redirect(url_for('instructor_courses', iid=iid, cid=cid))
 
 @app.route('/student_signup', methods=['GET', 'POST'])
 def student_signup():
