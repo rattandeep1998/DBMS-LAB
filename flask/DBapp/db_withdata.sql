@@ -138,7 +138,7 @@ DELIMITER $$
 CREATE TRIGGER checkstudentdateofbirth BEFORE INSERT ON student
 for each row
 begin
-if new.dob > Date(SYSDATE()) then
+if new.dob > DATE_SUB(Date(SYSDATE()), INTERVAL 10 YEAR)  then
 signal sqlstate '45000' set message_text = 'DOB should be less than current date';
 end if;
 end; $$

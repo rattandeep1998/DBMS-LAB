@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -183,15 +183,21 @@ def student_signup():
 		if f is not None:
 			return redirect(url_for('student_signup', message='User already exists'))
 		
-		cursor.execute("SELECT max(sid) FROM student")
-		count = cursor.fetchone()[0]
-		data = (count+1,name,str(dob),address,phone_number,highest_degree,email,password)
-		query = "INSERT INTO student VALUES ("+str(count+1)+",'"+name+"','"+dob+"','"+address+"',"+phone_number+",'"+highest_degree+"','"+email+"','"+password+"')"
-		print(query)
-		cursor.execute(query)
-		cursor.connection.commit()
+		try:
+			cursor.execute("SELECT max(sid) FROM student")
+			count = cursor.fetchone()[0]
+			data = (count+1,name,str(dob),address,phone_number,highest_degree,email,password)
+			query = "INSERT INTO student VALUES ("+str(count+1)+",'"+name+"','"+dob+"','"+address+"',"+phone_number+",'"+highest_degree+"','"+email+"','"+password+"')"
+			print(query)
+			cursor.execute(query)
+			cursor.connection.commit()
+			
+			return redirect('/student/'+str(count+1), code=307)
+
+		except Exception as e:
+			print(str(e))
+			return redirect(url_for('student_signup' , message='You should be atleast 10 years old'))
 		
-		return redirect('/student/'+str(count+1), code=307)
 
 @app.route('/student_login', methods=['GET', 'POST'])
 def student_login():
