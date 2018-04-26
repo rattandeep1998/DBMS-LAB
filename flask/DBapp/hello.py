@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -404,4 +404,4 @@ def submit_feedback(sid, cid):
 		return redirect(url_for('student_courses', sid=sid, cid=cid, message="Invalid Rating"))
 
 if __name__ == "__main__":
-	app.run(port=8001, debug=True, host='0.0.0.0')
+	app.run(port=8000, debug=True, host='0.0.0.0')

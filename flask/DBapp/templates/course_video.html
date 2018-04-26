@@ -56,6 +56,7 @@
     <center><h4>PROBLEMS</h4></center>
 
     <br>
+    {% if data['attempted']|length > 0 %}
     <h5>Attempted Problems</h5>
 
     <table class="table table-hover">
@@ -81,8 +82,8 @@
                     
                 {% endfor %}
             </tbody>
-        </table>  
-    </ul>
+    </table>  
+    {% endif %}
 
     <br><br>
     <p>
