@@ -8,7 +8,7 @@
      <meta name="description" content="">
      <meta name="author" content="">
  
-     <title>Signin Template for Bootstrap </title>
+     <title>CURSOS ONLINE</title>
  
      <link rel="stylesheet" href="../../../../../static/css/bootstrap.min.css">
  
@@ -20,17 +20,40 @@
  
     <div class="container">
 
-    <br>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">CURSOS ONLINE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/student/{{data['sid']}}">
+                <span class="sr-only">(current)</span>
+                COURSE CONTENT - {{data['video'].description}}
+              </a>
+
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <br><br><br><br><br>
     <center>
         <!-- Duration : {{data['video'].duration}} <br> -->
         <iframe width="560" height="315" src= {{data['video'].content}} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><br>
     </center>
-    <br>
-    <b> Description : </b> {{data['video'].description}} <br>
-    <b> Instructor : </b> {{data['video'].instructor}} <br><br><br>
+    <br><br><br>
+    <center><b> Description : </b> {{data['video'].description}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <b> Instructor : </b> {{data['video'].instructor}} <br><br><br></div></center>
 
     <br>
-    <h4>PROBLEMS</h4>
+    <center><h4>PROBLEMS</h4></center>
 
     <br>
     <h5>Attempted Problems</h5>
@@ -67,15 +90,17 @@
         <ul>
             {% for j in range(data['video'].problems|length) %}
             <li>
-                QUESTION : <br> {{data['video'].problems[j].question}} <br>
+                <b>QUESTION : </b><br> {{data['video'].problems[j].question}} <br>
                 <ol>
                     <li>{{data['video'].problems[j].opt1}}</li>
                     <li>{{data['video'].problems[j].opt2}}</li>
                     <li>{{data['video'].problems[j].opt3}}</li>
                     <li>{{data['video'].problems[j].opt4}}</li>
                     <form method="post" action="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['video'].vid}}/submit/{{data['video'].problems[j].pid}}">
+                        <br>
                         <input type="text" name="option" placeholder="Choose Option">
-                        <button class="btn" type="Submit">Submit</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="Submit" class="btn btn-danger">Submit</button>
                     </form>
                 </ol>
                 <br>

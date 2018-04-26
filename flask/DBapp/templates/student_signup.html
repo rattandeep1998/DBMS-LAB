@@ -8,7 +8,7 @@
      <meta name="description" content="">
      <meta name="author" content="">
  
-     <title>Signin Template for Bootstrap </title>
+     <title>CURSOS ONLINE</title>
  
      <link rel="stylesheet" href="static/css/bootstrap.min.css">
  
@@ -20,8 +20,24 @@
  
      <div class="container">
  
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">CURSOS ONLINE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+        </div>
+      </div>
+    </nav>
+
+    <br><br><br><br>
+
+
+
          <form class="form-signin" action="/student_signup" method="post" role="form">
-             <h2 class="form-signin-heading">Please Sign Up </h2>
+             <h2 class="form-signin-heading"> <center>SIGN UP </center></h2><br>
 
              <input type="text" name="name" class="form-control" placeholder="Name" required autofocus value="{{data['name']}}">
              <input type="text" name="address" class="form-control" placeholder="Address" required value="{{data['address']}}">

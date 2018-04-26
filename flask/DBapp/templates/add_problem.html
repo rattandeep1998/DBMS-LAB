@@ -8,7 +8,7 @@
      <meta name="description" content="">
      <meta name="author" content="">
  
-     <title>Signin Template for Bootstrap </title>
+     <title>CURSOS ONLINE </title>
  
      <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="../../../../../static/css/bootstrap.min.css">
@@ -21,8 +21,32 @@
  
      <div class="container">
  
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">CURSOS ONLINE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">
+                <span class="sr-only">(current)</span>
+                ADDING PROBLEMS IN QUESTION BANK
+              </a>
+
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <br><br><br><br><br>
+
          <form class="form-signin" action="/instructor/{{data['iid']}}/courses/{{data['cid']}}/{{data['vid']}}/add_problem" method="post" role="form">
-             <h2 class="form-signin-heading">Add Problem for the Video</h2>
+             <center><h2 class="form-signin-heading">ADD PROBLEM FOR VIDEO</h2></center><br>
              <input type="text" name="question" class="form-control" placeholder="Question" required autofocus>
              <input type="text" name="opt1" class="form-control" placeholder="opt1" required>
              <input type="text" name="opt2" class="form-control" placeholder="opt2" required>

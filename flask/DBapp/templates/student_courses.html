@@ -8,7 +8,7 @@
      <meta name="description" content="">
      <meta name="author" content="">
  
-     <title>Signin Template for Bootstrap </title>
+     <title>CURSOS ONLINE</title>
  
      <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
  
@@ -20,13 +20,37 @@
  
     <div class="container">
     
-    <br>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">CURSOS ONLINE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/student/{{data['sid']}}">
+                <span class="sr-only">(current)</span>
+                COURSE DETAILS
+              </a>
+
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <br><br><br><br>
     
-    <h3>Course Videos</h2>
+    <center><h3>COURSE VIDEOS</h2></h3></center>
+
     <ul>
     {% for i in range(data['videos']|length) %}
         <li>
-            <a href="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['videos'][i].vid}}">Topic : {{data['videos'][i].topic}}</a>
+            <a href="/student/{{data['sid']}}/courses/{{data['cid']}}/{{data['videos'][i].vid}}">TOPIC : {{data['videos'][i].topic}}</a>
         </li>
     {% endfor %}  
     </ul>
@@ -42,7 +66,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="Submit">Submit Feedback</button>
         </form>
     {% else %}
-        <h3>YOUR FEEDBACK</h3>
+        <center><h3>YOUR FEEDBACK</h3></center>
             Rating : {{data['feedback'].rating}} <br>
             Description : {{data['feedback'].description}}<br>
             Date : {{data['feedback'].date}}<br>
