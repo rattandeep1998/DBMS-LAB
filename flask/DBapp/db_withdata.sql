@@ -97,6 +97,7 @@ CREATE TABLE student (
 	address TEXT, 
 	phone_number varchar(10), 
 	highest_degree text, 
+	image text,
 	email text NOT NULL, 
 	password text NOT NULL, 
 	PRIMARY KEY(sid)
@@ -154,9 +155,9 @@ end; $$
 
 
 
-INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','merattandeep@gmail.com','pass123');
-INSERT into student values(102,'RAJAT SINGHAL','1997-02-01','Dwarka, New Delhi',8447151548,'BE','rs@gmail.com','rrrr');
-INSERT into student values(103,'RAUNAQ','1997-09-05','Paschim Vihar, New Delhi',999999999,'MS','raunaqsuryakhattar@gmail.com','abcd123');
+INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','rattan.jpg','merattandeep@gmail.com','pass123');
+INSERT into student values(102,'RAJAT SINGHAL','1997-02-01','Dwarka, New Delhi',8447151548,'BE','rajat.jpg','rs@gmail.com','rrrr');
+INSERT into student values(103,'RAUNAQ','1997-09-05','Paschim Vihar, New Delhi',999999999,'MS','raunaq.jpg','raunaqsuryakhattar@gmail.com','abcd123');
 
 INSERT into instructor values(201,'Ram Kumar','1975-01-01','Banglore',2188192681,'PHD','ramkumar@gmail.com','ramu123');
 INSERT into instructor values(202,'Shyam Malhotra','1980-05-04','Chennai',1219821999,'MBA','shyam@gmail.com','password');

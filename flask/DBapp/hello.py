@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -250,13 +250,14 @@ def student_login():
 @app.route('/student/<sid>', methods=['GET', 'POST'])
 def student_dashboard(sid):
 	print('sid = ', sid)
-	cursor.execute("SELECT name from student where sid="+str(sid))
-	name=cursor.fetchone()[0]
+	cursor.execute("SELECT name, image from student where sid="+str(sid))
+	name=cursor.fetchone()
 	d={
 		'sid':sid,
-		'name':name,
+		'name':name[0],
 		'enrolled_courses':[],
-		'other_courses':[]
+		'other_courses':[],
+		'image': name[1]
 	}
 
 	cursor.execute("SELECT cid, name, rating, description, date FROM enrolls natural join course where sid=" + sid)
