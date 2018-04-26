@@ -5,7 +5,7 @@ import json, datetime
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'rattandeep1998'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'AppData'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -80,9 +80,10 @@ def instructor_courses(iid, cid):
 	videos_problems = cursor.fetchall()
 
 	for v in videos_problems:
-		cursor.execute("SELECT duration from video where vid="+str(v[0]))
-		duration = cursor.fetchone()[0]
-		d['videos_problems'].append({'vid':v[0],'topic':v[1],'duration':duration,'problems':[]})
+		cursor.execute("SELECT duration, content from video where vid="+str(v[0]))
+		# duration = cursor.fetchone()[0]
+		duration = cursor.fetchone()
+		d['videos_problems'].append({'vid':v[0],'topic':v[1],'duration':duration[0],'content':duration[1],'problems':[]})
 		l = len(d['videos_problems'])
 		cursor.execute("SELECT PID,QUESTION,OPT1,OPT2,OPT3,OPT4,CORRECT FROM problem WHERE VID = " + str(v[0]))
 		problems = cursor.fetchall()
@@ -175,7 +176,16 @@ def delete_problem(iid,cid,pid):
 @app.route('/student_signup', methods=['GET', 'POST'])
 def student_signup():
 	if request.method=='GET':
-		return render_template('student_signup.html', message=request.args.get('message'))
+		d = {
+			'name':'',
+			'dob':'',
+			'address':'',
+			'phone_number':'',
+			'highest_degree':'',
+			'email':'',
+			'password':''
+		}
+		return render_template('student_signup.html', message=request.args.get('message'), data=d)
 	else:
 		name = request.form['name']
 		dob = request.form['dob']
@@ -184,6 +194,17 @@ def student_signup():
 		highest_degree = request.form['highest_degree']
 		email = request.form['email']
 		password = request.form['password']
+
+		d = {
+			'name':name,
+			'dob':dob,
+			'address':address,
+			'phone_number':phone_number,
+			'highest_degree':highest_degree,
+			'email':email,
+			'password':password,
+			'message':''
+		}
 
 		print(name, dob, address, phone_number, highest_degree, email, password)
 		cursor.execute("SELECT sid from student where email='" + email + "'")
@@ -204,7 +225,10 @@ def student_signup():
 
 		except Exception as e:
 			print(str(e))
-			return redirect(url_for('student_signup' , message='You should be atleast 10 years old'))
+			# return redirect(url_for('student_signup' , message='You should be atleast 10 years old', data=d))
+			d['message'] = 'You should be atleast 10 years old'
+			return render_template('student_signup.html', data=d)
+			# (url_for('student_signup' , message='You should be atleast 10 years old', data=d)))
 		
 
 @app.route('/student_login', methods=['GET', 'POST'])
@@ -379,4 +403,4 @@ def submit_feedback(sid, cid):
 		return redirect(url_for('student_courses', sid=sid, cid=cid, message="Invalid Rating"))
 
 if __name__ == "__main__":
-	app.run(port=8000, debug=True)
+	app.run(port=8000, debug=True, host='0.0.0.0')

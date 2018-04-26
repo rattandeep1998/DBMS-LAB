@@ -60,6 +60,8 @@
     {% for i in range(data['videos_problems']|length) %}
         <li>
             <b> Topic : </b>{{data['videos_problems'][i].topic}} <br><br>
+            <iframe width="560" height="315" src= {{data['videos_problems'][i].content}} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
             <h5>PROBLEMS</h5>
             <ul>
                 {% for j in range(data['videos_problems'][i].problems|length) %}
