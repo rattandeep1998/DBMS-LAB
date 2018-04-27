@@ -182,6 +182,7 @@ def student_signup():
 			'address':'',
 			'phone_number':'',
 			'highest_degree':'',
+			'image':'',
 			'email':'',
 			'password':''
 		}
@@ -192,6 +193,7 @@ def student_signup():
 		address = request.form['address']
 		phone_number = request.form['phone_number']
 		highest_degree = request.form['highest_degree']
+		image = request.form['image']
 		email = request.form['email']
 		password = request.form['password']
 
@@ -201,6 +203,7 @@ def student_signup():
 			'address':address,
 			'phone_number':phone_number,
 			'highest_degree':highest_degree,
+			'image':image,
 			'email':email,
 			'password':password,
 			'message':''
@@ -216,7 +219,8 @@ def student_signup():
 		try:
 			cursor.execute("SELECT max(sid) FROM student")
 			count = cursor.fetchone()[0]
-			image = '/static/images/user.png'
+			if len(d['image']) == 0:
+				image = '/static/images/user.png'
 			data = (count+1,name,str(dob),address,phone_number,highest_degree,image,email,password)
 			query = "INSERT INTO student VALUES ("+str(count+1)+",'"+name+"','"+dob+"','"+address+"',"+phone_number+",'"+highest_degree+"','"+image+"','"+ email+"','"+password+"')"
 			print(query)

@@ -30,8 +30,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/instructor/{{data['iid']}}/courses/{{data['cid']}}">
                 <span class="sr-only">(current)</span>
+                COURSE CONTENT
               </a>
 
             </li>
@@ -114,17 +115,17 @@
             </ul>
             <br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/{{data['videos_problems'][i].vid}}/add_problem" style='color: white'>
             <button type="button" class="btn-primary">
-            <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/{{data['videos_problems'][i].vid}}/add_problem" style='color: white'>ADD PROBLEM</a></button>
+            ADD PROBLEM</button></a>
         </li>
     {% endfor %}  
     </ul>
     <br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/add_video" style='color: white'>
             <button type="button" class="btn-primary">
-            
-    <a href="/instructor/{{data['iid']}}/courses/{{data['cid']}}/add_video" style='color: white'>ADD VIDEO</a>
-     </button>
+            ADD VIDEO</button></a>
      </div>
      <br><br><br><br><br><br><br><br><br>
  </body>
