@@ -34,7 +34,7 @@
             <li class="nav-item active">
               <a class="nav-link" href="/student/{{data['sid']}}">
                 <span class="sr-only">(current)</span>
-                <img src = "../../static/images/{{data['image']}}" height='50' width='50' style='border-radius: 50%'>
+                <img src = "../..{{data['image']}}" height='50' width='50' style='border-radius: 50%'> &nbsp;
                 Welcome, {{data['name']}}
               </a>
 
@@ -47,11 +47,11 @@
 
     <br><br>
     <br>
-    <!-- <h2>WELCOME {{data['name']}}</h2> -->
+    
     <br><br>
     <ul>
     {% if data['enrolled_courses']|length > 0 %}
-        <h4>ENROLLED COURSES</h4>
+        <h4>ENROLLED COURSES</h4><br>
         <table class="table table-hover">
             <thead>
               <tr>
@@ -91,7 +91,7 @@
     <br><br>
     <ul>
     {% if data['other_courses']|length > 0 %}
-        <h4>RECOMMENDED COURSES</h4>
+        <h4>RECOMMENDED COURSES</h4><br>
         <table class="table table-hover">
             <thead>
               <tr>

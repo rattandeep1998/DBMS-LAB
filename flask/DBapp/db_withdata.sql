@@ -155,8 +155,8 @@ end; $$
 
 
 
-INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','rattan.jpg','merattandeep@gmail.com','pass123');
-INSERT into student values(102,'RAJAT SINGHAL','1997-02-01','Dwarka, New Delhi',8447151548,'BE','rajat.jpg','rs@gmail.com','rrrr');
+INSERT into student values(101,'RATTANDEEP SINGH','1998-07-03','Tilak Nagar, New Delhi',8447151548,'BTECH','/static/images/rattan.jpg','merattandeep@gmail.com','pass123');
+INSERT into student values(102,'RAJAT SINGHAL','1997-02-01','Dwarka, New Delhi',8447151548,'BE','/static/images/rajat.jpg','rs@gmail.com','rrrr');
 INSERT into student values(103,'RAUNAQ','1997-09-05','Paschim Vihar, New Delhi',999999999,'MS','raunaq.jpg','raunaqsuryakhattar@gmail.com','abcd123');
 
 INSERT into instructor values(201,'Ram Kumar','1975-01-01','Banglore',2188192681,'PHD','ramkumar@gmail.com','ramu123');

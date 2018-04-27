@@ -210,13 +210,15 @@ def student_signup():
 		cursor.execute("SELECT sid from student where email='" + email + "'")
 		f = cursor.fetchone()
 		if f is not None:
+			peinr("email already exists")
 			return redirect(url_for('student_signup', message='User already exists'))
 		
 		try:
 			cursor.execute("SELECT max(sid) FROM student")
 			count = cursor.fetchone()[0]
-			data = (count+1,name,str(dob),address,phone_number,highest_degree,email,password)
-			query = "INSERT INTO student VALUES ("+str(count+1)+",'"+name+"','"+dob+"','"+address+"',"+phone_number+",'"+highest_degree+"','"+email+"','"+password+"')"
+			image = '/static/images/user.png'
+			data = (count+1,name,str(dob),address,phone_number,highest_degree,image,email,password)
+			query = "INSERT INTO student VALUES ("+str(count+1)+",'"+name+"','"+dob+"','"+address+"',"+phone_number+",'"+highest_degree+"','"+image+"','"+ email+"','"+password+"')"
 			print(query)
 			cursor.execute(query)
 			cursor.connection.commit()
@@ -254,7 +256,7 @@ def student_dashboard(sid):
 	name=cursor.fetchone()
 	d={
 		'sid':sid,
-		'name':name[0],
+		'name':name[0].capitalize(),
 		'enrolled_courses':[],
 		'other_courses':[],
 		'image': name[1]
