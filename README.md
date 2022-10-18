@@ -32,4 +32,45 @@ The feedback form will ask the student to rate the course on a scale of 1-5 with
   - Flask
   - Flask-MySQL
 
+### Hardware Requirements
 
+- Processor: Intel Core i5 processor
+- RAM: 512MB
+- Disk Space: 1GB
+- Operating System: Ubuntu
+- Python Version: 3.6.x
+
+
+## Screenshots of the App
+
+### Homepage
+
+![Homepage](./images/homepage.png)
+
+### Student SignUp
+
+![Student SignUp](./images/student-signup.png)
+
+### Student Dashboard
+
+![Student Dashboard](./images/student-dashboard.png)
+
+### Trigger Feedback
+
+![Trigger Feedback](./images/trigger-feedback.png)
+
+### Course Content - Video
+
+![Course Content](./images/course-content-video.png)
+
+### Course Questions
+
+![Course Questions](./images/course-questions.png)
+
+### Instructor Login
+
+![Instructor Login](./images/instructor-login.png)
+
+### Instructor Course Content
+
+![Instructor Course Content](./images/instructor-course-content.png)
